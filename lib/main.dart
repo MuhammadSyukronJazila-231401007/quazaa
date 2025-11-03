@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quazaa/providers/quiz_result_provider.dart';
 import 'screens/home.dart';
 import 'screens/settings.dart';
 import 'screens/leaderboard.dart';
 import 'widgets/bottom_navbar.dart';
 
 void main() {
-  runApp(const QuazaaApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => QuizResultProvider()),
+    ],
+    child: QuazaaApp(),
+  ));
 }
 
 class QuazaaApp extends StatelessWidget {
@@ -24,6 +31,7 @@ class QuazaaApp extends StatelessWidget {
     );
   }
 }
+
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

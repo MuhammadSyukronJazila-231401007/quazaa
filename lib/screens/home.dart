@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quazaa/screens/quiz_screen.dart';
 import '../widgets/quiz_card.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -98,17 +99,43 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: screenHeight * 0.02),
 
             // Daftar Quiz (pakai widget reusable)
-            QuizCard(
-              imagePath: 'assets/images/html.png',
-              title: 'HTML Crash Quiz',
-              subtitle: 'Technology · 20 Questions',
-            ),
-            SizedBox(height: screenHeight * 0.02),
-            QuizCard(
-              imagePath: 'assets/images/flutter.png',
-              title: 'Flutter Quiz',
-              subtitle: 'Technology · 15 Questions',
-            ),
+
+            // HTML Crash Quiz
+              QuizCard(
+                imagePath: 'assets/images/html.png',
+                title: 'HTML Crash Quiz',
+                subtitle: 'Technology · 20 Questions',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const QuizScreen(
+                        quizName: 'HTML Crash Quiz',
+                        totalQuestions: 20,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: screenHeight * 0.02),
+
+              // Flutter Quiz
+              QuizCard(
+                imagePath: 'assets/images/flutter.png',
+                title: 'Flutter Quiz',
+                subtitle: 'Technology · 15 Questions',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const QuizScreen(
+                        quizName: 'Flutter Quiz',
+                        totalQuestions: 15,
+                      ),
+                    ),
+                  );
+                },
+              ),
           ],
         ),
       ),

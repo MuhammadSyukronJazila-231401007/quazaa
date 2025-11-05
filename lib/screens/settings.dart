@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/user_provider.dart';
 import '../widgets/custom_button.dart';
 import '../widgets/text_input_field.dart';
 
@@ -13,7 +15,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
   final TextEditingController _nameController = TextEditingController();
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final userProvider = Provider.of<UserProvider>(context);
+
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
 
@@ -39,16 +49,35 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               SizedBox(height: screenHeight * 0.07),
 
-              // Avatar
-              CircleAvatar(
-                radius: screenWidth * 0.15,
-                backgroundImage: const AssetImage('assets/images/avatar1.png'),
+              // Avatar + tombol refresh
+              Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  CircleAvatar(
+                    radius: screenWidth * 0.15,
+                    backgroundImage: AssetImage(userProvider.avatarPath),
+                  ),
+                  Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF001833),
+                      shape: BoxShape.circle,
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.refresh, color: Colors.white),
+                      onPressed: () {
+                        userProvider.randomizeAvatar();
+                      },
+                    ),
+                  ),
+                ],
               ),
               SizedBox(height: screenHeight * 0.02),
 
               // Nama pengguna
               Text(
-                'Ahmad Subardjo',
+                userProvider.username.isNotEmpty
+                    ? userProvider.username
+                    : 'Guest',
                 style: TextStyle(
                   fontFamily: 'Rubik',
                   fontWeight: FontWeight.w700,
@@ -84,8 +113,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
               CustomButton(
                 text: 'Update',
                 onPressed: () {
-                  // Tambahkan aksi update nanti
-                  debugPrint("Name updated: ${_nameController.text}");
+                  if (_nameController.text.trim().isNotEmpty) {
+                    userProvider.updateUsername(_nameController.text.trim());
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Profile updated!')),
+                    );
+
+                    _nameController.clear();
+                  }
                 },
               ),
             ],

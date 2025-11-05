@@ -44,7 +44,7 @@ class ResultScreen extends StatelessWidget {
                     ),
                   ),
 
-                  SizedBox(height: screenHeight * 0.12),
+                  SizedBox(height: screenHeight * 0.1),
 
                   // "Nice Work"
                   Text(
@@ -52,12 +52,12 @@ class ResultScreen extends StatelessWidget {
                     style: TextStyle(
                       fontFamily: 'Rubik',
                       fontWeight: FontWeight.w700,
-                      fontSize: screenWidth * 0.08,
+                      fontSize: screenWidth * 0.07,
                       color: const Color(0xFF001833),
                     ),
                   ),
 
-                  SizedBox(height: screenHeight * 0.04),
+                  SizedBox(height: screenHeight * 0.038),
 
                   // Lingkaran skor
                   Container(
@@ -73,14 +73,14 @@ class ResultScreen extends StatelessWidget {
                         style: TextStyle(
                           fontFamily: 'Rubik',
                           fontWeight: FontWeight.w700,
-                          fontSize: screenWidth * 0.08,
+                          fontSize: screenWidth * 0.075,
                           color: const Color(0xFFF0ECE6),
                         ),
                       ),
                     ),
                   ),
 
-                  SizedBox(height: screenHeight * 0.04),
+                  SizedBox(height: screenHeight * 0.035),
 
                   // Bintang
                   Row(
@@ -91,7 +91,7 @@ class ResultScreen extends StatelessWidget {
                         padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.015),
                         child: Icon(
                           Icons.star,
-                          size: screenWidth * 0.15,
+                          size: screenWidth * 0.13,
                           color: isActive
                               ? Colors.yellow.shade600
                               : const Color(0xFF001833),
@@ -100,7 +100,7 @@ class ResultScreen extends StatelessWidget {
                     }),
                   ),
 
-                  SizedBox(height: screenHeight * 0.05),
+                  SizedBox(height: screenHeight * 0.045),
 
                   // Teks hasil
                   RichText(
@@ -110,7 +110,7 @@ class ResultScreen extends StatelessWidget {
                       style: TextStyle(
                         fontFamily: 'Rubik',
                         fontWeight: FontWeight.w400,
-                        fontSize: screenWidth * 0.055,
+                        fontSize: screenWidth * 0.045,
                         color: const Color(0xFF001833),
                       ),
                       children: [

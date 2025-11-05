@@ -29,7 +29,7 @@ class _QuizScreenState extends State<QuizScreen> {
   @override
   void initState() {
     super.initState();
-    questions = QuizData.getRandomQuestions(widget.quizName, widget.totalQuestions);
+    questions = QuizData.getRandomQuestions(widget.quizName);
   }
 
   void nextQuestion() {
@@ -118,7 +118,7 @@ class _QuizScreenState extends State<QuizScreen> {
       canPop: false, // cegah pengguna kembali
       onPopInvoked: (didPop) {
         if (didPop) return;
-        // tampilkan pesan jika ingin (opsional)
+        // tampilkan pesan kalau belum siap kuis tapi back
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             content: Text('Kuis belum selesai, tidak bisa kembali!'),

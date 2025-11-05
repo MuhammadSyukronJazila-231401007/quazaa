@@ -1,66 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quazaa/providers/quiz_result_provider.dart';
-import 'screens/home.dart';
-import 'screens/settings.dart';
-import 'screens/leaderboard.dart';
-import 'widgets/bottom_navbar.dart';
+import 'package:go_router/go_router.dart';
+
+import 'providers/quiz_result_provider.dart';
+import 'providers/user_provider.dart';
+import 'config/router.dart'; 
 
 void main() {
-  runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (_) => QuizResultProvider()),
-    ],
-    child: QuazaaApp(),
-  ));
+  final router = createRouter(); 
+
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => QuizResultProvider()),
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+      ],
+      child: QuazaaApp(router: router),
+    ),
+  );
 }
 
 class QuazaaApp extends StatelessWidget {
-  const QuazaaApp({super.key});
+  final GoRouter router;
+  const QuazaaApp({super.key, required this.router});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Quazaa',
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
+      title: 'Quazaa App',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFF0ECE6),
         fontFamily: 'Rubik',
+        scaffoldBackgroundColor: const Color(0xFFF0ECE6),
       ),
-      home: const MainScreen(),
-    );
-  }
-}
-
-
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
-
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  int _currentIndex = 0;
-
-  final List<Widget> _screens = const [
-    HomeScreen(),
-    SettingsScreen(),
-    LeaderboardScreen(),
-  ];
-
-  void _onTabSelected(int index) {
-    setState(() => _currentIndex = index);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _screens[_currentIndex],
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: _currentIndex,
-        onTabSelected: _onTabSelected,
-      ),
+      routerConfig: router,
     );
   }
 }

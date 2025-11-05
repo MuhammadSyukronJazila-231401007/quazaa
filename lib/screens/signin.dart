@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import '../providers/user_provider.dart';
 
 class Signin extends StatefulWidget {
   const Signin({super.key});
@@ -10,13 +13,63 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   final TextEditingController nameController = TextEditingController();
 
+  void _handleNext() {
+    final name = nameController.text.trim();
+
+    if (name.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          backgroundColor: const Color(0xFFF0ECE6),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: const Text(
+            'Name Required',
+            style: TextStyle(
+              fontFamily: 'Rubik',
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF001833),
+            ),
+          ),
+          content: const Text(
+            'Please enter your name before continuing.',
+            style: TextStyle(
+              fontFamily: 'Rubik',
+              color: Color(0xFF001833),
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text(
+                'OK',
+                style: TextStyle(
+                  color: Color(0xFF001833),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
+    // Simpan nama ke provider
+    Provider.of<UserProvider>(context, listen: false).setUser(name);
+
+    // Pindah ke halaman utama
+    context.goNamed('home');
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: const Color(0xFF001833), // biru tua
+      backgroundColor: const Color(0xFF001833),
       resizeToAvoidBottomInset: false,
       body: LayoutBuilder(
         builder: (context, constraints) {
@@ -29,21 +82,16 @@ class _SigninState extends State<Signin> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Gambar tanda tanya (PNG)
                   Container(
                     width: screenWidth,
                     height: screenHeight * 0.3,
                     alignment: Alignment.center,
                     child: Image.asset(
                       'assets/images/tanda_tanya.png',
-                      fit: BoxFit.contain, 
+                      fit: BoxFit.contain,
                     ),
                   ),
-
-
                   SizedBox(height: screenHeight * 0.06),
-
-                  // Card putih untuk input
                   Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.06,
@@ -56,7 +104,6 @@ class _SigninState extends State<Signin> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        // Judul
                         Text(
                           "Hello Strangers,\nWhat's your name?",
                           textAlign: TextAlign.center,
@@ -68,10 +115,7 @@ class _SigninState extends State<Signin> {
                             color: const Color(0xFF001833),
                           ),
                         ),
-
                         SizedBox(height: screenHeight * 0.03),
-
-                        // Input nama
                         TextField(
                           controller: nameController,
                           decoration: InputDecoration(
@@ -85,8 +129,8 @@ class _SigninState extends State<Signin> {
                             filled: true,
                             fillColor: const Color(0xFFE0DEDA),
                             border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(
-                                  screenWidth * 0.1), // sudut membulat
+                              borderRadius:
+                                  BorderRadius.circular(screenWidth * 0.1),
                               borderSide: BorderSide.none,
                             ),
                             contentPadding: EdgeInsets.symmetric(
@@ -104,38 +148,31 @@ class _SigninState extends State<Signin> {
                       ],
                     ),
                   ),
-
                   SizedBox(height: screenHeight * 0.05),
-
-                  // Tombol Next 
                   SizedBox(
-                    width: screenWidth * 0.7, // lebar tombol 70% dari layar
-                    height: screenHeight * 0.07, // tinggi tombol 7% dari layar
+                    width: screenWidth * 0.7,
+                    height: screenHeight * 0.07,
                     child: TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: const Color(0xFF30304D), // background gelap
+                        backgroundColor: const Color(0xFF30304D),
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12), // corner radius sedang
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                      onPressed: () {
-                        // Navigasi ke halaman berikutnya
-                        debugPrint('Nama: ${nameController.text}');
-                      },
+                      onPressed: _handleNext,
                       child: Text(
-                        'Next', // teks tombol
+                        'Next',
                         style: TextStyle(
                           fontFamily: 'Rubik',
-                          fontWeight: FontWeight.w600, // SemiBold
+                          fontWeight: FontWeight.w600,
                           color: Colors.white,
-                          fontSize:  screenWidth * (isLargeScreen ? 0.038 : 0.055),
+                          fontSize:
+                              screenWidth * (isLargeScreen ? 0.038 : 0.055),
                         ),
                       ),
                     ),
                   ),
-
-                 
-                 ],
+                ],
               ),
             ),
           );

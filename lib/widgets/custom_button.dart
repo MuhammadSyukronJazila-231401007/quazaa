@@ -20,7 +20,7 @@ class CustomButton extends StatelessWidget {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF30304D),
-          padding: EdgeInsets.symmetric(vertical: screenWidth * 0.05),
+          padding: EdgeInsets.symmetric(vertical: screenWidth * 0.045),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -30,7 +30,7 @@ class CustomButton extends StatelessWidget {
           style: TextStyle(
             fontFamily: 'Rubik',
             fontWeight: FontWeight.w600,
-            fontSize: screenWidth * 0.045,
+            fontSize: screenWidth * 0.04,
             color: Colors.white,
           ),
         ),

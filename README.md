@@ -35,61 +35,58 @@ Terima kasih kepada berbagai desainer dan kreator komunitas yang menjadi inspira
 
 ---
 
-# Screenshot App
+# 📱 Screenshot App
 
 Berikut adalah tampilan antarmuka dari aplikasi **Quazaa**, mulai dari layar pembuka hingga layar hasil akhir.
 
 ---
 
 ## 🟣 Tampilan Awal
+<img src="assets/images/awal.png" alt="Splashscreen" width="500"/>
 
-![Splashscreen](assets/images/awal.png)
-
-- **Splashscreen** menampilkan logo **Quazaa** dengan animasi fade-in sederhana, memberikan kesan modern dan edukatif.
+- **Splashscreen** menampilkan logo **Quazaa** dengan animasi fade-in sederhana.
 - **Input Nama**: pengguna diminta memasukkan nama sebelum memulai kuis, agar skor dapat disimpan secara personal.
 
 ---
 
 ## 🧠 Tampilan Halaman Home
+<img src="assets/images/home.jpg" alt="Home Screen" width="350"/>
 
-![Home Screen](assets/images/home.jpg)
-- **Home Screen**: menampilkan daftar kategori kuis seperti **HTML Crash Quiz** dan **Flutter Quiz**, masing-masing disertai gambar, jumlah soal, dan kategori bidangnya.
+- Menampilkan daftar kategori kuis seperti **HTML Crash Quiz** dan **Flutter Quiz**.
 - Tiap kategori berbentuk **card interaktif** berisi gambar, nama kuis, dan jumlah soal.
-- Ketika diklik, pengguna akan diarahkan ke halaman quiz.
+- Ketika diklik, pengguna diarahkan ke halaman quiz.
 
 ---
 
 ## 📘 Tampilan Quiz
-
-![Quiz Screen](assets/images/quiz.jpg)
+<img src="assets/images/quiz.jpg" alt="Quiz Screen" width="350"/>
 
 - **Pertanyaan** ditampilkan satu per satu, dengan opsi jawaban yang dapat diklik.
-- Setiap soal dapat memiliki **gambar ilustrasi pendukung** seperti tampilan UI
+- Soal bisa memiliki **gambar ilustrasi pendukung**.
 - **Efek visual**:
-  - Pilihan benar → warna **hijau** dengan efek animasi “bergetar halus”.
-  - Pilihan salah → warna **merah** dengan animasi “shake” ringan.
-
+  - ✅ Benar → warna **hijau** + animasi “bergetar halus”.
+  - ❌ Salah → warna **merah** + animasi “shake” ringan.
 
 ---
 
 ## 🏁 Tampilan Hasil
-![Result Screen](assets/images/result.jpg)
+<img src="assets/images/result.jpg" alt="Result Screen" width="350"/>
 
-- Menampilkan total soal, jumlah jawaban benar, dan **rating bintang (⭐️)** berdasarkan performa:
-  - 1 bintang per ⅓ total soal benar.
-  - Contoh: dari 15 soal, jika benar 10 → ⭐️⭐️.
-- Tombol  **Go To Home** untuk kembali ke halaman utama.
+- Menampilkan total soal, jumlah jawaban benar, dan **rating bintang (⭐️)**.
+- Contoh: dari 15 soal, jika benar 10 → ⭐️⭐️.
+- Tombol **Go To Home** untuk kembali ke halaman utama.
 
 ---
 
 ## ⚙️ Tampilan Settings
-![Settings Screen](assets/images/settings.jpg)
+<img src="assets/images/settings.jpg" alt="Settings Screen" width="350"/>
 
-- Pengguna dapat mengubah **nama**, mengubah **foto profile** secara acak, serta **reset progress** quiz.
+- Ubah **nama**, ganti **foto profil** secara acak, atau **reset progress** quiz.
+
 ---
 
 ## 🏆 Tampilan Leaderboard
-![Leaderboard Screen](assets/images/leaderboard.jpg)
+<img src="assets/images/leaderboard.jpg" alt="Leaderboard Screen" width="350"/>
 
 - Menampilkan **peringkat pemain berdasarkan skor tertinggi**.
 - Tiga besar diberi warna khusus:
@@ -97,8 +94,7 @@ Berikut adalah tampilan antarmuka dari aplikasi **Quazaa**, mulai dari layar pem
   - 🥈 Perak (2)
   - 🥉 Perunggu (3)
 
----
-
+ ---
 
 # 🧩 Fitur Utama
 

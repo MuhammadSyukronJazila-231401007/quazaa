@@ -297,6 +297,7 @@ class _QuizScreenState extends State<QuizScreen> {
                                   child: Center(
                                     child: Text(
                                       q.options[index],
+                                      textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: 'Rubik',
                                         fontWeight: FontWeight.w400,

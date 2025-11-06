@@ -13,13 +13,15 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
-
+    final Color bgColor =
+        (text == "Reset Progress") ? Colors.redAccent : const Color(0xFF30304D);
+        
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0xFF30304D),
+          backgroundColor: bgColor,
           padding: EdgeInsets.symmetric(vertical: screenWidth * 0.045),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),

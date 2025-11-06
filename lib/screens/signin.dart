@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../providers/user_provider.dart';
+import 'package:quazaa/widgets/custom_button.dart';
 
 class Signin extends StatefulWidget {
   const Signin({super.key});
@@ -13,7 +15,7 @@ class Signin extends StatefulWidget {
 class _SigninState extends State<Signin> {
   final TextEditingController nameController = TextEditingController();
 
-  void _handleNext() {
+  void _handleNext() async {
     final name = nameController.text.trim();
 
     if (name.isEmpty) {
@@ -56,11 +58,20 @@ class _SigninState extends State<Signin> {
       return;
     }
 
-    // Simpan nama ke provider
-    Provider.of<UserProvider>(context, listen: false).setUser(name);
+    final prefs = await SharedPreferences.getInstance();
+    final existingName = prefs.getString('username');
 
-    // Pindah ke halaman utama
-    context.goNamed('home');
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+    if (existingName != null && existingName == name) {
+      // Jika user sudah ada, load data lamanya
+      await userProvider.loadFromPrefs();
+    } else {
+      // Jika user baru, set data baru
+      await userProvider.setUser(name);
+    }
+
+    if (context.mounted) context.goNamed('home');
   }
 
   @override
@@ -80,18 +91,18 @@ class _SigninState extends State<Signin> {
             child: Padding(
               padding: EdgeInsets.all(screenWidth * 0.07),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Container(
+                    margin: EdgeInsets.only(top: screenHeight * 0.02),
                     width: screenWidth,
-                    height: screenHeight * 0.3,
+                    height: screenHeight * 0.25,
                     alignment: Alignment.center,
                     child: Image.asset(
                       'assets/images/tanda_tanya.png',
                       fit: BoxFit.contain,
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.06),
+                  SizedBox(height: screenHeight * 0.04),
                   Container(
                     padding: EdgeInsets.symmetric(
                       horizontal: screenWidth * 0.06,
@@ -148,30 +159,12 @@ class _SigninState extends State<Signin> {
                       ],
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.05),
-                  SizedBox(
-                    width: screenWidth * 0.7,
-                    height: screenHeight * 0.07,
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        backgroundColor: const Color(0xFF30304D),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      onPressed: _handleNext,
-                      child: Text(
-                        'Next',
-                        style: TextStyle(
-                          fontFamily: 'Rubik',
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white,
-                          fontSize:
-                              screenWidth * (isLargeScreen ? 0.038 : 0.055),
-                        ),
-                      ),
-                    ),
+                  SizedBox(height: screenHeight * 0.09),
+                  CustomButton(
+                    text: 'Next',
+                    onPressed: _handleNext,
                   ),
+                  
                 ],
               ),
             ),

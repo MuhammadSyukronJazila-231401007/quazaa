@@ -40,7 +40,8 @@ class QuizData {
         {
           'question': 'Siapa yang mengembangkan Flutter?',
           'options': ['Facebook', 'Google', 'Amazon', 'USU'],
-          'correctAnswerIndex': 1
+          'correctAnswerIndex': 1,
+          'image' : 'assets/images/flutter.png'
         },
         {
           'question': 'Bahasa utama yang digunakan Flutter?',

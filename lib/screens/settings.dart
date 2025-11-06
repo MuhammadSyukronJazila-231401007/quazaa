@@ -107,7 +107,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 controller: _nameController,
                 hintText: 'Type your new name...',
               ),
-              SizedBox(height: screenHeight * 0.07),
+              SizedBox(height: screenHeight * 0.065),
 
               // Tombol Update
               CustomButton(
@@ -121,6 +121,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                     _nameController.clear();
                   }
+                },
+              ),
+              SizedBox(height: screenHeight * 0.035),
+
+              CustomButton(
+                text: 'Reset Progress',
+                onPressed: () async {
+                  await userProvider.resetProgress();
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Progress has been reset!')),
+                  );
                 },
               ),
             ],

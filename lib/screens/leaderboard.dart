@@ -1,75 +1,54 @@
 import 'package:flutter/material.dart';
 import '../widgets/leaderboard_item.dart';
+import '../providers/user_provider.dart';
 
-class LeaderboardScreen extends StatelessWidget {
+class LeaderboardScreen extends StatefulWidget {
   const LeaderboardScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
+  State<LeaderboardScreen> createState() => _LeaderboardScreenState();
+}
 
-    // Data dummy sementara
-    final List<Map<String, dynamic>> leaderboardData = [
-      {
-        'rank': 1,
-        'name': 'Ahmad Subardjo',
-        'points': 35,
-        'avatar': 'assets/images/avatar1.png',
-      },
-      {
-        'rank': 2,
-        'name': 'Alena Donin',
-        'points': 33,
-        'avatar': 'assets/images/avatar2.png',
-      },
-      {
-        'rank': 3,
-        'name': 'Craig Gouse',
-        'points': 30,
-        'avatar': 'assets/images/avatar3.png',
-      },
-      {
-        'rank': 4,
-        'name': 'Madelyn Dias',
-        'points': 28,
-        'avatar': 'assets/images/avatar4.png',
-      },
-      {
-        'rank': 5,
-        'name': 'Zain Vaccaro',
-        'points': 20,
-        'avatar': 'assets/images/avatar5.png',
-      },
-      // {
-      //   'rank': 6,
-      //   'name': 'Zain Vaccaro',
-      //   'points': 20,
-      //   'avatar': 'assets/images/avatar5.png',
-      // },
-      // {
-      //   'rank': 7,
-      //   'name': 'Zain Vaccaro',
-      //   'points': 20,
-      //   'avatar': 'assets/images/avatar5.png',
-      // },
-      // {
-      //   'rank': 8,
-      //   'name': 'Zain Vaccaro',
-      //   'points': 20,
-      //   'avatar': 'assets/images/avatar5.png',
-      // },
-    ];
+class _LeaderboardScreenState extends State<LeaderboardScreen> {
+  List<Map<String, dynamic>> leaderboardData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadLeaderboard();
+  }
+
+  Future<void> _loadLeaderboard() async {
+    final users = await UserProvider.getAllUsers();
+
+    final List<Map<String, dynamic>> data = users.values.map<Map<String, dynamic>>((u) {
+      return {
+        'name': u['username'],
+        'points': u['totalPoints'],
+        'avatar': u['avatarPath'],
+      };
+    }).toList();
+
+    // Urutkan dari poin tertinggi
+    data.sort((a, b) => b['points'].compareTo(a['points']));
+
+    setState(() {
+      leaderboardData = data;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       backgroundColor: const Color(0xFFF0ECE6),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsetsGeometry.directional(start: screenWidth * 0.08, end: screenWidth * 0.08, top: screenWidth * 0.07),
+          padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.08, vertical: screenWidth * 0.07),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Judul halaman
               Text(
                 'QUAZAA',
                 style: TextStyle(
@@ -88,20 +67,21 @@ class LeaderboardScreen extends StatelessWidget {
               ),
               SizedBox(height: screenHeight * 0.04),
 
-              // Daftar leaderboard
               Expanded(
-                child: ListView.builder(
-                  itemCount: leaderboardData.length,
-                  itemBuilder: (context, index) {
-                    final user = leaderboardData[index];
-                    return LeaderboardItem(
-                      rank: user['rank'],
-                      name: user['name'],
-                      points: user['points'],
-                      avatarPath: user['avatar'],
-                    );
-                  },
-                ),
+                child: leaderboardData.isEmpty
+                    ? const Center(child: Text("Belum ada data leaderboard"))
+                    : ListView.builder(
+                        itemCount: leaderboardData.length,
+                        itemBuilder: (context, index) {
+                          final user = leaderboardData[index];
+                          return LeaderboardItem(
+                            rank: index + 1,
+                            name: user['name'],
+                            points: user['points'],
+                            avatarPath: user['avatar'],
+                          );
+                        },
+                      ),
               ),
             ],
           ),

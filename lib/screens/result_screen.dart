@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/quiz_result_provider.dart';
 import '../widgets/custom_button.dart';
+import 'package:go_router/go_router.dart';
 
 class ResultScreen extends StatelessWidget {
   const ResultScreen({super.key});
@@ -134,8 +135,7 @@ class ResultScreen extends StatelessWidget {
                       text: 'Go To Home',
                       onPressed: () {
                         resultProvider.reset();
-                        Navigator.of(context)
-                            .popUntil((route) => route.isFirst);
+                        context.goNamed('home');
                       },
                     ),
                   ),
